@@ -4,24 +4,39 @@ import filter from './assets/Frame (8).svg'
 import sort from './assets/Frame (9).svg'
 import arrowup from './assets/Frame (10).svg'
 import Item from './Item'
-import pic  from './assets/Rectangle.svg'
-import pic2  from './assets/Rectangle (1).svg'
+// import pic  from './assets/Rectangle.svg'
+// import pic2  from './assets/Rectangle (1).svg'
+import { client } from '@/sanity/lib/client';
 
-export default function Products() {
-    const names = "Nike Court Vision Low Next Nature";
-    const type = "Just In";
-    const catagory = "Men's Shoes";
-    const color = "1 Colour";
-    const price = " 4 995.00";
-    const data = Array.from({ length: 95 }, (_, i) => ({
-        id: i + 1,
-        name: names,
-        type: type,
-        catagory: catagory,
-        color: color,
-        price: price,
-        picture: pic2,
-      }));
+interface Product {
+    _id: string;
+    name: string;
+    price: number;
+    discountPercentage: number;
+    tags: string;
+    rating: number;
+    ratingCount: number;
+    description: string;
+    imageUrl: string
+}
+
+export default async function Products() {
+
+      const data = await client.fetch(
+        `*[_type == "product"]{
+          _id,
+          name,
+          price,
+          discountPercentage,
+          tags,
+          rating,
+          ratingCount,
+          description,
+          "imageUrl": image.asset->url
+        }`
+    );
+
+    // console.log("this is id",)
 
   return (
     <section className='pt-[76px] 1400:px-12 sm:px-8 px-5 flex flex-col gap-4'>
@@ -110,10 +125,8 @@ export default function Products() {
         {/* Products */}
         <div className='grid 1400:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 pb-[140px] border-b-[1px] border-solid'>
             {/* Product 01 */}
-        <Item type='Just In' name="Nike Air Force 1 Mid '07" catagory="Men's Shoes" color="1 Colour" price="10 795.00" picture={pic}/>
-            {/* Product 02 */}
-        {data.map((item)=>(
-            <Item key={item.id} type={item.type} name={item.name} catagory={item.catagory} color={item.color} price={item.price} picture={item.picture}/>
+        {data.map((item:Product)=>(
+            <Item key={item._id} id={item._id} rating={item.rating} ratingCount={item.ratingCount} type={`Just In`} name={item.name} catagory={item.tags} color={`1 Color`} price={item.price} picture={item.imageUrl}/>
         ))}
         </div>
 
