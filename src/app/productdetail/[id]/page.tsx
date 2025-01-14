@@ -43,13 +43,13 @@ interface cartItem{
   image:string
 }
 
-export default function page({ params: { id } }: PageProps) {
+export default function Page({ params: { id } }: PageProps) {
 
   const cartContext = useCartContext();
   if (!cartContext) {
     throw new Error("useCartContext must be used within a CartProvider");
   }
-  const { cart, setCart } = cartContext;
+  const { setCart } = cartContext;
   
   const [item, setItem] = useState<Product[]>()
 
