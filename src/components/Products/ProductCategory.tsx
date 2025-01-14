@@ -20,10 +20,14 @@ interface Product {
     imageUrl: string
 }
 
-export default async function Products() {
+export default async function Products({category}:{category:string}) {
+
+    function CategoryFinder(param:string){
+        if(param==="electronics"){return 'electronics'}else if(param==="jewelery"){return 'jewelery'}else if(param==="men"){return "men's clothing"}else if(param==='women'){return "women's clothing"}
+    }
 
       const data = await client.fetch(
-        `*[_type == "product"]{
+        `*[_type == "product" && "${CategoryFinder(category)}" in tags]{
           _id,
           name,
           price,

@@ -3,7 +3,7 @@ import {createContext, useContext, useState} from 'react'
 
 interface CartContextType {
 
-  cart: any[];
+  cart: cartItem[];
 
   setCart: React.Dispatch<React.SetStateAction<cartItem[]>>;
 

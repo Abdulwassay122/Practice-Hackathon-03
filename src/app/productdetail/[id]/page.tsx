@@ -8,6 +8,7 @@ import { client } from "@/sanity/lib/client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import cartt from "./assets/Buy 2.svg";
+import loader from "./assets/Animation - 1736611675285.gif";
 import Link from "next/link";
 import { useCartContext } from "@/app/Contexts/CartContext";
 
@@ -44,8 +45,21 @@ interface cartItem{
 
 export default function page({ params: { id } }: PageProps) {
 
+  const cartContext = useCartContext();
+  if (!cartContext) {
+    throw new Error("useCartContext must be used within a CartProvider");
+  }
+  const { cart, setCart } = cartContext;
   
   const [item, setItem] = useState<Product[]>()
+
+  const [loading, setLoading] = useState<boolean>(true)
+  
+  const [qty, setQty] = useState(1)
+
+  useEffect(()=>{
+    fetchApi()
+  })
   const fetchApi = async () => {
     const itemm = await client.fetch(`*[_type == 'product' && _id == '${id}']{
       _id,
@@ -59,16 +73,10 @@ export default function page({ params: { id } }: PageProps) {
       "imageUrl": image.asset->url
       }`)
       setItem(itemm)
+      setLoading(false)
     }
-    fetchApi()
     
-    const [qty, setQty] = useState(1)
     
-    const cartContext = useCartContext();
-    if (!cartContext) {
-      throw new Error("useCartContext must be used within a CartProvider");
-    }
-    const { cart, setCart } = cartContext;
   function addToCart(){
   const cartItem = {
     quantity: qty,
@@ -81,7 +89,7 @@ export default function page({ params: { id } }: PageProps) {
     image: item ? item[0].imageUrl : '',
   }
   setCart((prevCart: cartItem[]) => [...prevCart, cartItem]);
-  console.log(cart);
+  alert('Product Added to cart Successfully!')
 }
 // function addToCart (){
 //   const storedUser = JSON.parse(localStorage.getItem("user") || '{}');
@@ -120,6 +128,7 @@ export default function page({ params: { id } }: PageProps) {
     <>
       <Navbar />
 
+        {loading && <div className="h-screen w-screen flex items-center justify-center"><Image src={loader} alt="" /></div>}
       <section className="flex xl:gap-[137px] gap-10 1160:flex-row items-center flex-col xl:px-[110px] 450:px-10 px-5 pt-[110px] pb-[162px]">
         {item && (
           <Image
@@ -149,7 +158,7 @@ export default function page({ params: { id } }: PageProps) {
               {item ? `Ratings ${item[0].ratingCount}` : ""}
             </p>
           </div>
-          <div className="flex flex-col gap-2">
+          {!loading && <div className="flex flex-col gap-2">
             <div className="border-[1px] flex w-[174px] items-center  justify-between rounded-full">
               <button onClick={()=>setQty(qty<=1?1:qty-1)} className="pl-6 text-[25px] text-gray-800">-</button>
               <p className="text-[20px] p-auto border-x-[1px]  h-full text-gray-800 px-5 leading-10">
@@ -166,7 +175,7 @@ export default function page({ params: { id } }: PageProps) {
               </Link>
               <Image className="absolute left-5" src={cartt} alt="" />
             </div>
-          </div>
+          </div>}
         </div>
       </section>
 

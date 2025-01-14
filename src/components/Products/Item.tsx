@@ -5,7 +5,7 @@ import star from './assets/reshot-icon-star-ZH7KM9EGN8.svg'
 import graystar from './assets/graystar.svg'
 import graystarhalf from './assets/graystarhalf.svg'
 
-export default function Item({type, name, rating, ratingCount, catagory, id, color, price, picture}: {id:string, ratingCount:number, rating:number, picture: string, type: string, name:string, price:number, color:string, catagory:string }) {
+export default function Item({name, rating, ratingCount, catagory, id, color, price, picture}: {id:string, ratingCount:number, rating:number, picture: string, name:string, price:number, color:string, catagory:string }) {
   function ratingSystem (Rating:number){
     if(Rating === 0){
       return <div className='flex gap-1'>

@@ -1,24 +1,12 @@
 'use client'
 import React from 'react'
 import Image from "next/image";
-import pic1 from './assets/Frame (13).svg';
 import wishlist from './assets/Frame (14).svg';
 import deletee from './assets/Frame (15).svg'
 import Link from 'next/link'
-import { client } from '@/sanity/lib/client';
 import { useCartContext } from "@/app/Contexts/CartContext";
 
-interface cartItem{
-  _id:string,
-  description:string,
-  name:string,
-  tags:string,
-  productId:string,
-  image:string,
-  price:number,
-  totalprice:number,
-  quantity:number,
-}
+
 
 
 export default function Cart() {
@@ -27,12 +15,13 @@ export default function Cart() {
   if (!cartContext) {
     return <div>Loading...</div>;
   }
-  let { cart, setCart } = cartContext;
+  const { cart, setCart } = cartContext;
+  
   const data = cart
 let subTotal = 0 
 for(let i=0; i<data.length; i++){
-  subTotal += data?data[i].totalprice:''
-  console.log(i)
+  subTotal += data ? Number(data[i].totalprice) : 0
+  // console.log(i)
 }
 
 console.log(data.length)
@@ -50,7 +39,7 @@ console.log(data.length)
               <h2 className='text-[22px] leading-[33px] font-[500] md:w-[717px]'>Bag</h2>
 
               {data.length === 0 ? <div className=' w-full flex items-center sm:h-[218px] justify-center'>No Item</div>:''}
-              {data.map((item:cartItem, index)=>{
+              {data.map((item, index)=>{
 
                return(<div key={index} className='md:w-[717px] sm:h-[218px] flex items-center border-b-[1px] border-solid'>
                 <div className='sm:h-[170px] sm:flex-row flex-col flex sm:gap-[30px]'>
@@ -90,7 +79,7 @@ console.log(data.length)
           </div>
           <div className='flex justify-between h-[62px] items-center border-solid border-y-[1px]'>
             <p className='text-[15px] text-[#111111] leading-7'>Total</p>
-            <p className='text-[15px] text-[#111111] leading-7'>₹ 20 890.00</p>
+            <p className='text-[15px] text-[#111111] leading-7'>{`$${subTotal.toFixed(2)}`}</p>
           </div>
           <Link href="/checkout"><button className='sm:w-[334px] w-[300px] h-[60px] rounded-full mt-2 ml-2 bg-black text-[15px] text-[#ffffff] leading-7'>Member Checkout</button></Link>
         </div>
