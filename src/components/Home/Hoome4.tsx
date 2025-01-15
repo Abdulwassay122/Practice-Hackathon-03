@@ -59,6 +59,14 @@ export default function Hoome4() {
     setMenData(menDataa)
     setWomenData(womenDataa)
     }
+    function onclick(){
+        setMenSlide(menSlide < 666 ? menSlide + 333 :0)
+        console.log(menSlide)
+    }
+    function onclick2(){
+        setwomenSlide(womenSlide < 1332 ? womenSlide + 333:0)
+        console.log(womenSlide)
+    }
   return (
     <section className='px-12 flex flex-col gap-[25px]'>
         <h2 className='text-[23px] leading-7 font-[500]'>Gear Up</h2>
@@ -71,7 +79,7 @@ export default function Hoome4() {
                 <button onClick={()=>setMenSlide(menSlide !==0 ? menSlide - 333: 0)} className='h-12 w-12 flex justify-center items-center rounded-full bg-[#F5F5F5]'>
                     <Image src={arrowleft} alt="" />
                 </button>
-                <button onClick={()=>setMenSlide(menSlide <  (menData?.length ?? 0) * 166.5 ? menSlide + 333:0)} className='h-12 w-12 flex justify-center items-center rounded-full bg-[#F5F5F5]'>
+                <button onClick={onclick} className='h-12 w-12 flex justify-center items-center rounded-full bg-[#F5F5F5]'>
                     <Image src={arrowright} alt="" />
                 </button>
             </div>
@@ -80,7 +88,7 @@ export default function Hoome4() {
             {!loading && <div className='flex w-[666px] overflow-x-hidden 1400:pl-12 sm:flex-row flex-col pr-[6px] gap-3 pb-14'>
                 {/* item 01 */}
                 {menData?.map((ele)=>{ return (
-                    <Link key={ele._id} href={`/productdetail/${ele._id}`}><div className={`min-w-[300px] -translate-x-[${menSlide}px] h-[393px] transition-transform duration-300 flex flex-col gap-[21px]`}>
+                    <Link key={ele._id} href={`/productdetail/${ele._id}`}><div className={`min-w-[300px] -translate-x-[${menSlide.toString()}px] h-[393px] transition-transform duration-300 flex flex-col gap-[21px]`}>
                     <div className='w-full h-[301px] flex items-center justify-center p-2 bg-[#E5E5E5]'>
                         <Image className='h-[293px] w-[auto]' width={200} height={200} src={ele.imageUrl} alt="" />    
                     </div>
@@ -102,7 +110,7 @@ export default function Hoome4() {
                 <button onClick={()=>setwomenSlide(womenSlide !==0 ? womenSlide - 333: 0)} className='h-12 w-12 flex justify-center items-center rounded-full bg-[#F5F5F5]'>
                     <Image src={arrowleft} alt="" />
                 </button>
-                <button onClick={()=>setwomenSlide(womenSlide < (womenData?.length ?? 0) * 222 ? womenSlide + 333:0)} className='h-12 w-12 flex justify-center items-center rounded-full bg-[#F5F5F5]'>
+                <button onClick={onclick2} className='h-12 w-12 flex justify-center items-center rounded-full bg-[#F5F5F5]'>
                     <Image src={arrowright} alt="" />
                 </button>
             </div>
@@ -111,7 +119,7 @@ export default function Hoome4() {
             {!loading && <div className='flex 1400:pl-12 w-[666px] overflow-x-hidden  sm:flex-row flex-col  pr-[6px] gap-3 pb-14'>
                 {/* item 01 */}
                 {womenData?.map((ele)=>{return( 
-                    <Link key={ele._id} href={`/productdetail/${ele._id}`}><div className={`min-w-[300px] h-[393px] -translate-x-[${womenSlide}px] transition-transform duration-300 flex flex-col gap-[21px]`}>
+                    <Link key={ele._id} href={`/productdetail/${ele._id}`}><div className={`min-w-[300px] h-[393px] -translate-x-[${womenSlide.toString()}px] transition-transform duration-300 flex flex-col gap-[21px]`}>
                     <div className='w-full h-[301px] flex items-center justify-center p-2 bg-[#E5E5E5]'>
                         <Image className='h-[293px] w-[auto]' width={200} height={200} src={ele.imageUrl} alt="" />    
                     </div>

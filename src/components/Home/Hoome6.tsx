@@ -11,8 +11,8 @@ export default function Hoome6() {
         <div className='flex flex-col gap-6 overflow-hidden'>
             <h3 className='text-[23px] leading-7 font-[500]'>The Essentials</h3>
             <div className='pl-[6px] flex gap-3 1400:overflow-visible overflow-x-auto justify-between'>
-                <Link href="/products"><Image src={img1} alt="" /></Link>
-                <Link href="/products"><Image src={img2} alt="" /></Link>
+                <Link href="/product/men"><Image src={img1} alt="" /></Link>
+                <Link href="/product/women"><Image src={img2} alt="" /></Link>
                 <Link href="/products"><Image src={img3} alt="" /></Link>
             </div>
         </div>
